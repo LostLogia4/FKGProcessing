@@ -109,7 +109,7 @@ class MasterData(object):
 		"""Creates a list of skill entries from masterCharacterSkill."""
 		if not len(api_data):
 			print('There are no skill entries. Parsing bug?')
-		skill_entries = [SkillEntry(entry) for entry in api_data]
+		skill_entries = [SkillEntry(entry.replace('"','').replace('胡蝶乱舞','・胡蝶乱舞')) for entry in api_data]
 		my.skills = {s.uniqueID:s for s in skill_entries}
 
 	def _parse_ability_entries(my, api_data=[]):
