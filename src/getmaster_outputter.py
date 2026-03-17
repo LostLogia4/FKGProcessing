@@ -505,47 +505,10 @@ class MasterDataOutputter(object):
 			''').lstrip().format(ids_to_names, names_to_ids)
 		return output
 
-	def get_char_list_page(self):
-		"""Outputs the table of knight IDs to names, and vice-versa."""
-		# Write the page header.
-		module_name = 'Module:FlowerMemories/Data'
-
-		def getid(knight):
-			return knight.tiers[1]['id']
-		ids_to_names = '\n'.join(["    ['{0}'] = '{1}',".format(
-			knight.tiers[1]['id'], knight.fullName) for knight in \
-				sorted(self.md.knights.values(), key=getid)])
-
-		def getname(knight):
-			return knight.fullName
-		names_to_ids = '\n'.join(["    ['{0}'] = '{1}',".format(
-			knight.fullName, knight.tiers[1]['id']) for knight in \
-				sorted(self.md.knights.values(), key=getname)])
-
-		output = dedent(u'''
-			--[[Category:Flower Knight description modules]]
-			--[[Category:Automatically updated modules]]
-			-- Relates character names to their IDs and vice-versa.
-			-- Use this module when MasterCharacterData is overkill.
-
-			return {{
-			idToName = {{
-			{0}
-			}},
-
-			nameToId = {{
-			{1}
-			}}
-			}}
-			''').lstrip().format(ids_to_names, names_to_ids)
-		return output
-
 	def get_flower_memories_list_page(self):
 		"""Outputs the table of Flower Memory IDs and their related info."""
 		# Write the page header.
 		module_name = 'Module:FlowerMemories/Data'
-		def getname(entry):
-			return int(entry.name)
 		def getid(entry):
 			return int(entry.flowerMemoryID)
 		memories = u',\n\t'.join([entry.getlua(True) for entry in
