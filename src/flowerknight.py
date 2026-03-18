@@ -72,11 +72,7 @@ class FlowerKnight(object):
 			# Otherwise, it might overwrite the playable character's data.
 			# An example is the one-star Tsutsuji/Azalea.
 			return
-		tier = entry.evolutionTier
-		isRarityGrown = entry.isRarityGrown == '1'
-		maxEvolutionFlag = entry.maxEvolutionFlag == '1'
-		bloomingEnableFlag = entry.bloomingEnableFlag == '1'
-		if entry.id0 == entry.charID2 and entry.charID2 == entry.extendedCharacterID:
+		if int(entry.id0) >= 700000 and entry.fullName == 'サンカヨウ(イースター)' and entry.variant == 'イースター(別バージョン)':
 			# Handles the weird case with サンカヨウ whose master data looks like this
 			#       id0,       id1, charID1, baseName0,   charID2,             fullName,                variant, extendedCharacterID,
 			#    146603,    146603,    6046, サンカヨウ,      6046, サンカヨウ(イースター),              イースター,            14660300,
@@ -84,8 +80,12 @@ class FlowerKnight(object):
 			#    446603,    446603,    6046, サンカヨウ,      6046, サンカヨウ(イースター),              イースター,            44660300,
 			# 146603001, 146603001,    6046, サンカヨウ, 146603001, サンカヨウ(イースター), イースター(別バージョン),           146603001,
 			# That last entry is an alternate skin. We can ignore it or store it somehow
-			pass
-		elif tier == '1':
+			return
+		tier = entry.evolutionTier
+		isRarityGrown = entry.isRarityGrown == '1'
+		maxEvolutionFlag = entry.maxEvolutionFlag == '1'
+		bloomingEnableFlag = entry.bloomingEnableFlag == '1'
+		if tier == '1':
 			my._add_tier1_entry(entry)
 		elif tier == '2':
 			my._add_tier2_entry(entry)
